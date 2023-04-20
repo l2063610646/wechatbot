@@ -14,6 +14,12 @@ type Configuration struct {
 	ApiKey string `json:"api_key"`
 	// 自动通过好友
 	AutoPass bool `json:"auto_pass"`
+	// 是否使用代理
+	UseProxy bool `json:"use_proxy"`
+	// 代理地址
+	ProxyUrl string `json:"proxy_url"`
+	// 是否使用gptTurbo
+	UseGPT bool `json:"use_gpt"`
 	// 会话超时时间
 	SessionTimeout time.Duration `json:"session_timeout"`
 }
@@ -45,6 +51,26 @@ func LoadConfig() *Configuration {
 		ApiKey := os.Getenv("ApiKey")
 		AutoPass := os.Getenv("AutoPass")
 		SessionTimeout := os.Getenv("SessionTimeout")
+		UseProxy := os.Getenv("UseProxy")
+		ProxyUrl := os.Getenv("ProxyUrl")
+		UseGPT := os.Getenv("UseGPT")
+		if ProxyUrl != "" {
+			config.ProxyUrl = ProxyUrl
+		}
+		if UseProxy != "" {
+			if UseProxy == "true" {
+				config.UseProxy = true
+			} else {
+				config.UseProxy = false
+			}
+		}
+		if UseGPT != "" {
+			if UseGPT == "true" {
+				config.UseGPT = true
+			} else {
+				config.UseGPT = false
+			}
+		}
 		if ApiKey != "" {
 			config.ApiKey = ApiKey
 		}
