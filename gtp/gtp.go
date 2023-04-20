@@ -9,6 +9,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"net/url"
 )
 
 const BASEURL = "https://api.openai.com/v1/"
@@ -71,6 +72,15 @@ func Completions(msg string) (string, error) {
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+apiKey)
 	client := &http.Client{}
+	if config.LoadConfig().UseProxy {
+		log.Printf("已开启代理 : %v", config.LoadConfig().ProxyUrl)
+		proxy, _ := url.Parse(config.LoadConfig().ProxyUrl)
+		client = &http.Client{
+			Transport: &http.Transport{
+				Proxy: http.ProxyURL(proxy),
+			},
+		}
+	}
 	response, err := client.Do(req)
 	if err != nil {
 		return "", err
