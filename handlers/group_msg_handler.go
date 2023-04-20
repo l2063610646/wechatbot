@@ -60,9 +60,10 @@ func (g *GroupMessageHandler) ReplyText(msg *openwechat.Message) error {
 		return nil
 	}
 	reply, err := gtp.Completions(requestText)
+
 	if err != nil {
 		log.Printf("gtp request error: %v \n", err)
-		_, err = msg.ReplyText("机器人神了，我一会发现了就去修。")
+		_, err = msg.ReplyText("哎呀，无法连接到大脑QAQ")
 		if err != nil {
 			log.Printf("response group error: %v \n", err)
 		}
@@ -76,7 +77,7 @@ func (g *GroupMessageHandler) ReplyText(msg *openwechat.Message) error {
 	reply = strings.TrimSpace(reply)
 	reply = strings.Trim(reply, "\n")
 	// 设置上下文
-	UserService.SetUserSessionContext(sender.ID(), requestText, reply)
+	UserService.SetUserSessionContext(sender.ID(), msg.Content, reply)
 	replyText := atText + reply
 	_, err = msg.ReplyText(replyText)
 	if err != nil {
@@ -92,6 +93,6 @@ func buildRequestText(sender *openwechat.User, msg *openwechat.Message) string {
 	if requestText == "" {
 		return ""
 	}
-	requestText = UserService.GetUserSessionContext(sender.ID()) + requestText
+	requestText = UserService.GetUserSessionContext(sender.ID(), requestText)
 	return requestText
 }
