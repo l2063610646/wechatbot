@@ -25,7 +25,7 @@
 > 非技术人员请直接下载release中的[压缩包](https://github.com/869413421/wechatbot/releases/tag/v1.1.1) ，解压运行。
 ````
 # 获取项目
-git clone https://github.com/869413421/wechatbot.git
+git clone https://github.com/l2063610646/wechatbot.git
 
 # 进入项目目录
 cd wechatbot
@@ -40,27 +40,27 @@ go run main.go
 # 配置文件说明
 ````
 {
-"api_key": "your api key",
-"auto_pass": true,
-"session_timeout": 60
+    "api_key": "your api key",
+    "auto_pass": true,
+    "session_timeout": 60,
+    "use_proxy": false,
+    "proxy_url": "http://127.0.0.1:10809",
+    "use_gpt": false
 }
 
 api_key：openai api_key
 auto_pass:是否自动通过好友添加
 session_timeout：会话超时时间，默认60秒，单位秒，在会话时间内所有发送给机器人的信息会作为上下文。
+use_proxy：是否使用代理模式（如果你没有国外服务器的时候有用）
+proxy_url：代理的地址（例：http://127.0.0.1:10809）
+use_gpt：是否使用gpt-3.5-turbo模型，否则使用text-davinci-003
 ````
 
 # 使用示例
-### 向机器人发送`我要问下一个问题`，清空会话信息。
+### 向机器人发送`过`，清空会话信息。
+
 ### 私聊
-<img width="300px" src="https://raw.githubusercontent.com/869413421/study/master/static/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20221208153022.jpg"/>
+直接将想要提问的问题通过私聊的方式发送给机器人
 
-### 群聊@回复
-<img width="300px" src="https://raw.githubusercontent.com/869413421/study/master/static/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20221208153015.jpg"/>
-
-### 添加微信（备注: wechabot）进群交流
-
-**如果二维码图片没显示出来，请添加微信号 huangyanming681925**
-
-<img width="210px"  src="https://raw.githubusercontent.com/869413421/study/master/static/qr.png" align="left">
-
+### 群聊
+在群里需要@机器人，然后再加上需要说的问题，例如：@我的小机器人 你好
