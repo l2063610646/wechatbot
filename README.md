@@ -64,3 +64,17 @@ use_gpt：是否使用gpt-3.5-turbo模型，否则使用text-davinci-003
 
 ### 群聊
 在群里需要@机器人，然后再加上需要说的问题，例如：@我的小机器人 你好
+
+# Docker部署方式
+使用前需要创建一个config.json配置文件，该配置文件需要放在容器内的/app目录下，例如
+````
+docker run -it --name wechatgpt -v /opt/wechatgpt/config.json:/app/config.json wechatgpt-liu
+````
+登录之后将在容器内的/app路径下，生成storage.json文件，该文件记录了登录信息
+
+如果出现第二次登录登录不上的问题，就可以尝试将该文件删除，所以我们使用数据卷挂载的方式也是个不错的选择
+
+````
+docker run -it --name wechatgpt -v /opt/wechatgpt:/app wechatgpt-liu 
+````
+这样就可以在宿主机通过删除/opt/wechatgpt/storage.json来使用清除登录信息的效果了
